@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% block content %}
+<main id="main">
+
+    {% for movie in movies_list %}
+    <movie id="movie">
+        <ul>
+            <li> <a href='/details?title={{movie.title}}&year={{movie.release_year}}'> {{ movie.title }}, {{ movie.release_year }} </a> </li>
+            <br>
+        </ul>
+    </movie>
+    {% endfor %}
+
+<footer>
+        <nav style="clear:both">
+            <div style="float:left">
+                {% if first_page_url is not none %}
+                    <button class="btn-general" onclick="location.href='{{first_page_url}}'">First page</button>
+                {% else %}
+                    <button class="btn-general-disabled" disabled>First page</button>
+                {% endif %}
+                {% if prev_page_url is not none %}
+                    <button class="btn-general" onclick="location.href='{{prev_page_url}}'">Previous page</button>
+                {% else %}
+                    <button class="btn-general-disabled" disabled>Previous page</button>
+                {% endif %}
+            </div>
+            <div style="float:right">
+                {% if next_page_url is not none %}
+                    <button class="btn-general" onclick="location.href='{{next_page_url}}'">Next page</button>
+                {% else %}
+                    <button class="btn-general-disabled" disabled>Next page</button>
+                {% endif %}
+                {% if last_page_url is not none %}
+                    <button class="btn-general" onclick="location.href='{{last_page_url}}'">Last page</button>
+                {% else %}
+                    <button class="btn-general-disabled" disabled>Last page</button>
+                {% endif %}
+            </div>
+        </nav>
+</footer>
+
+
+</main>
+{% endblock %}
