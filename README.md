@@ -20,10 +20,10 @@ Then using a Command Prompt window, switch to the directory of *CS235-A2*
 that now contains the movies\ and tests\ directories plus other files:
 
 ```shell
-$ cd CS235-A2
-$ py -3 -m venv venv
-$ venv\Scripts\activate
-$ pip install -r requirements.txt
+C:\> cd CS235-A2
+C:\CS235-A2> py -3 -m venv venv
+C:\CS235-A2> venv\Scripts\activate
+C:\CS235-A2> pip install -r requirements.txt
 ```
 
 When using PyCharm, set the virtual environment using 'File'->'Settings' and select 
@@ -39,7 +39,7 @@ From the *CS235-A2* directory, and within the activated virtual environment
 (see *venv\Scripts\activate* above):
 
 ````shell
-$ flask run
+C:\CS235-A2> flask run
 ```` 
 Then open the link in a browser to run the application.
 ## Configuration
@@ -69,7 +69,7 @@ assigns TEST_DATA_PATH with the following value (the use of os.path.join and os.
 You can then run tests from within PyCharm or within the virtual environment in a terminal.
 
  ````shell
-$ python -m pytest
+C:\CS235-A2> python -m pytest
 ```` 
 
 ## Note
@@ -81,5 +81,4 @@ interpreter where to find your modules. If required, PYTHONPATH should be
 set to the full path of the directory that contains \movies and \tests 
 (i.e. CS235-A2):
 
-`C:\Users\CI GE\Desktop\CS235-A2> set PYTHONPATH=
-C:\Users\CI GE\Desktop\CS235-A2`
+`C:\CS235-A2> set PYTHONPATH=C:\CS235-A2`
