@@ -1,7 +1,41 @@
-<aside id="sidebar">
+<style>
+    .img-small1 {
+        display: block;
+        width: 300px;
+        height: 170px;
+        padding: 5px;
+        margin-left: auto;
+        margin-right:auto;
+    }
 
+    .movie_name {
+        text-align: center;
+        height: 18px;
+        margin-top: 0.15em;
+    }
+
+#article-container1 {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0px;
+}
+</style>
+
+<aside id="sidebar">
     <header>
-        <h1>Editor's picks</h1>
+        <h1 style="color: Tomato">Now Showing</h1>
     </header>
+
+    {% for num in random_num_list %}
+    <div id="article-container1">
+        <a href='{{ sidebar_movies[num][1] }}'>
+            <img class="img-small1" src="{{ sidebar_movies[num][2] }}" />
+        </a>
+        <div class="movie_name">
+            <b>{{ sidebar_movies[num][0] }}</b>
+        </div>
+    </div>
+    {% endfor %}
 
 </aside>

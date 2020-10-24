@@ -4,7 +4,7 @@
 <style>
     .movie {
         border-radius: 0.45em;
-        border: 0.1em solid #00000022;
+        border: 0.1em solid LightGray;
         padding: 0.5em 1em 0.5em 1em;
         margin: 0.5em 0;
     }
@@ -51,7 +51,7 @@
 
     .comments {
         border-radius: 0.45em;
-        border: 0.1em solid #00000022;
+        border: 0.1em solid LightGray;
         padding: 0.5em 1em 0.5em 1em;
         margin: 0.5em 0;
         text-align: center;
@@ -82,6 +82,8 @@
     <div class="form-wrapper">
         <form action="{{handler_url}}" method="post">
             {{form.movie_rank}} <!-- Need to include this hidden field as it tracks the article being commented. -->
+            {{form.keywords}}
+            {{form.searchType}}
             {{form.cursor}}
             {{form.csrf_token}} <!-- Need to include this token - Flask WTForms requires it. -->
             <br>
@@ -104,4 +106,5 @@
         {% endfor %}
     </div>
 </main>
+
 {% endblock %}

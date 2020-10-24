@@ -1,4 +1,5 @@
 id,user-id,movie-id,comment-text,timestamp
-1,2,508,"Oh no, COVID-19 has hit New Zealand",2020-02-28 14:31:26
-2,1,508,"Yeah Freddie, bad news",2020-02-28 14:39:51
-3,3,508,"I hope it's not as bad here as Italy!",2020-02-29 08:12:08
+1,2,508,"Great movie ever!",2020-02-28 14:31:26
+2,1,508,"Nice!",2020-02-28 14:39:51
+3,3,508,"Good",2020-02-29 08:12:08
+4,1,119,"WoW",2019-10-11 11:12:06

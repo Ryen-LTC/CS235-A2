@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Movies</title>
+    <title>Love Movies</title>
 
     <link
       rel="stylesheet"
@@ -36,6 +36,9 @@
         <div id="container">
           <!-- Main content block to be supplied by page. -->
           {% block content %} {% endblock %}
+
+          <!-- Include sidebar partial. -->
+          {% include 'sidebar.html' %}
         </div>
 
       </div>

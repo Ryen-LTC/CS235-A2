@@ -1,8 +1,6 @@
-from typing import List, Iterable
+from typing import Iterable
 from movies.adapters.repository import AbstractRepository
-from movies.adapters.memory_repository import MemoryRepository
-from movies.adapters.memory_repository import load_movies
-from movies.domain.model import Actor, Movie, Genre, Director, Review, User, Comment, make_comment
+from movies.domain.model import Comment, make_comment
 
 
 class UnknownUserException(Exception):
@@ -41,6 +39,7 @@ def get_movie_by_rank(repo: AbstractRepository, rank: int):
 def add_comment(movie_rank: int, comment_text: str, username: str, repo: AbstractRepository):
     # Check that the article exists.
     movie = repo.get_movie_by_rank(movie_rank)
+
     if movie is None:
         raise NonExistentMovieException
 
@@ -76,3 +75,4 @@ def comment_to_dict(comment: Comment):
 
 def comments_to_dict(comments: Iterable[Comment]):
     return [comment_to_dict(comment) for comment in comments]
+

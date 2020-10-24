@@ -5,18 +5,20 @@
     .tag {
         font-size: 0.65em;
         padding: 0.25em 0.5em 0.25em 0.5em;
-        color: #00000088;
-        background-color: #00000022;
+        color: white;
+        background-color: Grey;
         border-radius: 0.45em;
     }
     .movie-card {
         border-radius: 0.45em;
-        border: 0.1em solid #00000022;
+        border: 0.1em solid LightGray;
         padding: 0.5em 1em 0.5em 1em;
         margin: 0.5em 0;
     }
+
     .form-row {
         text-align: center;
+        height: 4.5em;
     }
     .form-inline-element {
         display: inline-block;
@@ -30,31 +32,101 @@
     .form-inline-element.submit {
         width: 6em;
     }
+
+    .btn_back-general {
+        background-color: #7532cd;
+        color: white;
+        border: none;
+        display: inline-block;
+        font-size: 0.9em;
+        border-radius: 4.2px;
+        padding: 7.6px;
+        width: 7em;
+        height: 2.857em;
+        margin-left: -0.05em;
+    }
+    .btn_back-general:hover {
+        background-color: #8acd32;
+        color: black;
+    }
 </style>
 
-<main id="main">
-    {% for movie in movies_list %}
-    <movie id="movie">
-        <ul>
-            <a href='/movie/details?rank={{movie.rank}}&cursor={{cursor}}'>
-                <li class="movie-card">
-                    <span class="tag">Title</span>
-                    {{ movie.title }} <br>
-                    <span class="tag">Year</span>
-                    {{ movie.release_year }} <br>
-                    <span class="tag">Director</span>
-                    {{ movie.director.director_full_name }} <br>
-                    <span class="tag">Actors</span>
-                    {{ movie.actors|map(attribute="actor_full_name")|join(", ") }} <br>
-                    <span class="tag">Genres</span>
-                    {{ movie.genres|map(attribute="genre_name")|join(", ") }} <br>
-                </li>
-            </a>
-        </ul>
-    </movie>
-    {% endfor %}
 
-<footer>
+<main id="main">
+    <div class="form-wrapper">
+        <form action="{{handler_url}}" method="GET">
+            <div class="form-row">
+                <div class="form-inline-element keywords">
+                    {{form.keywords(placeholder="Keywords")}}
+                </div>
+                <div class="form-inline-element search-type">
+                    {{form.searchType()}}
+                </div>
+                <div class="form-inline-element submit">
+                    {{ form.submit }}
+                </div>
+                {{ form.cursor }}
+                <a href='/movies' class="btn_back-general">Browse all</a>
+            </div>
+        </form>
+    </div>
+
+    {% if movies_list|length == 0 %}
+        <ul>
+            <li class="movie-card">
+                <span class="tag">ERROR</span>
+                No movies found, please try again
+                <br>
+                <br>
+            </li>
+        </ul>
+    {% else %}
+        {% if keywords.strip() == '' %}
+            {% for movie in movies_list %}
+                <movie id="movie">
+                    <ul>
+                        <a href='/movies/detail?rank={{movie.rank}}&cursor={{cursor}}'>
+                            <li class="movie-card">
+                                <span class="tag">Title</span>
+                                {{ movie.title }} <br>
+                                <span class="tag">Year</span>
+                                {{ movie.release_year }} <br>
+                                <span class="tag">Director</span>
+                                {{ movie.director.director_full_name }} <br>
+                                <span class="tag">Actors</span>
+                                {{ movie.actors|map(attribute="actor_full_name")|join(", ") }} <br>
+                                <span class="tag">Genres</span>
+                                {{ movie.genres|map(attribute="genre_name")|join(", ") }} <br>
+                            </li>
+                        </a>
+                    </ul>
+                </movie>
+            {% endfor %}
+        {% else %}
+            {% for movie in movies_list %}
+                <movie id="movie">
+                    <ul>
+                        <a href='/movies/detail?rank={{movie.rank}}&keywords={{keywords}}&searchType={{searchType}}&cursor={{cursor}}'>
+                            <li class="movie-card">
+                                <span class="tag">Title</span>
+                                {{ movie.title }} <br>
+                                <span class="tag">Year</span>
+                                {{ movie.release_year }} <br>
+                                <span class="tag">Director</span>
+                                {{ movie.director.director_full_name }} <br>
+                                <span class="tag">Actors</span>
+                                {{ movie.actors|map(attribute="actor_full_name")|join(", ") }} <br>
+                                <span class="tag">Genres</span>
+                                {{ movie.genres|map(attribute="genre_name")|join(", ") }} <br>
+                            </li>
+                        </a>
+                    </ul>
+                </movie>
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+
+    <footer>
         <nav style="clear:both">
             <div style="float:left">
                 {% if first_page_url is not none %}
@@ -81,8 +153,7 @@
                 {% endif %}
             </div>
         </nav>
-</footer>
-
-
+    </footer>
 </main>
+
 {% endblock %}

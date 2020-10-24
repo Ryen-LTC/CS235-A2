@@ -1,7 +1,7 @@
 """Initialize Flask app."""
 
 import os
-from flask import Flask, render_template, request, url_for
+from flask import Flask
 import movies.adapters.repository as repo
 from movies.adapters.memory_repository import MemoryRepository, populate
 

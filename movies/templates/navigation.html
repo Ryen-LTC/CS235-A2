@@ -1,24 +1,22 @@
 <nav id="nav">
-  <img id="logo" src="{{ url_for('static', filename='covid-19.png') }}" />
+  <img style="width: 12em" id="logo" src="{{ url_for('static', filename='top_movies_2.png') }}" />
 
   <h2 id="nav-header">
-    {% if 'username' in session %} Hello, {{ session['username'] }}
+    {% if 'username' in session %} Hi, VIP {{ session['username'] }}
     {% endif %}
   </h2>
 
-  <a class="btn-nav" href="{{ url_for('home_bp.home') }}">Home</a>
-  <a class="btn-nav" href="{{ url_for('movie_bp.show_all_movies') }}">Browse all movies</a>
-  <a class="btn-nav" href="{{ url_for('movie_bp.search_movies') }}">Search movies</a>
-
-  <br>
+  <a style="font-size: 1em" class="btn-nav" href="{{ url_for('home_bp.home') }}">Home</a>
+  <a style="font-size: 0.98em" class="btn-nav" href="{{ url_for('movie_bp.show_all_movies') }}">Browse & Search movies</a>
   <br>
 
-  <a class="btn-nav" href="{{ url_for('authentication_bp.login') }}">Login</a>
-  <a class="btn-nav" href="{{ url_for('authentication_bp.logout') }}">Logout</a>
-  <a class="btn-nav" href="{{ url_for('authentication_bp.register') }}">Register</a>
-
+  <h3 id="sub-nav-header" style="font-size: 1.1em">Join us, and make comments</h3>
+  <a style="font-size: 1em" class="btn-nav" href="{{ url_for('authentication_bp.login') }}">Login</a>
+  <a style="font-size: 1em" class="btn-nav" href="{{ url_for('authentication_bp.logout') }}">Logout</a>
+  <a style="font-size: 1em" class="btn-nav" href="{{ url_for('authentication_bp.register') }}">Register</a>
 
   <div id="nav-footer">
-    COMPSCI 235 Software Development Methodologies
+    <p style="color: white">COMPSCI 235 Software Development Methodologies</p>
+    <p style="color: white">Tianci Liu, tliu204</p>
   </div>
 </nav>

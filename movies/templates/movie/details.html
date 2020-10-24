@@ -4,7 +4,7 @@
 <style>
     .movie {
         border-radius: 0.45em;
-        border: 0.1em solid #00000022;
+        border: 0.1em solid LightGray;
         padding: 0.5em 1em 0.5em 1em;
         margin: 0.5em 0;
     }
@@ -51,7 +51,7 @@
 
     .comments {
         border-radius: 0.45em;
-        border: 0.1em solid #00000022;
+        border: 0.1em solid LightGray;
         padding: 0.5em 1em 0.5em 1em;
         margin: 0.5em 0;
         text-align: center;
@@ -79,10 +79,10 @@
         </div>
     </div>
 
-        <footer>
+    <footer>
         <nav style="clear:both">
             <div style="float:right">
-                <button class="btn-general" onclick="location.href='{{prev_page_url}}'">Back to movie list</button>
+                <button class="btn-general" onclick="location.href='{{prev_page_url}}'">Back to previous page</button>
             </div>
 
             {% if movie.number_of_comments == 0 %}
@@ -116,7 +116,8 @@
             </script>
             {% endif %}
         </nav>
-            <div style="clear:both">
+
+        <div style="clear:both">
             <button class="btn-general" onclick="location.href='{{ add_comment_url }}'">Make your new comment</button>
         </div>
     </footer>
