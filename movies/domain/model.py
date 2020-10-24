@@ -1,5 +1,7 @@
 import csv
 import datetime
+from datetime import date, datetime
+from typing import List, Iterable
 
 
 class Actor:
@@ -106,8 +108,39 @@ class Genre:
         return hash(self.__genre_name)
 
 
+class Comment:
+    def __init__(self, user: 'User', movie: 'Movie', comment: str, timestamp: datetime):
+        self.__user: User = user
+        self.__movie: Movie = movie
+        self.__comment: Comment = comment
+        self.__timestamp: datetime = timestamp
+
+    @property
+    def user(self) -> 'User':
+        return self.__user
+
+    @property
+    def movie(self) -> 'Movie':
+        return self.__movie
+
+    @property
+    def comment(self) -> str:
+        return self.__comment
+
+    @property
+    def timestamp(self) -> datetime:
+        return self.__timestamp
+
+    def __eq__(self, other):
+        if not isinstance(other, Comment):
+            return False
+        return other.__user == self.__user and other.__movie == self.__movie and other.__comment == self.__comment and other.__timestamp == self.__timestamp
+
+
 class Movie:
-    def __init__(self, title: str, release_year: int):
+    def __init__(self, rank: int, title: str, release_year: int, description: str):
+        self.__rank = rank
+
         if title == "" or type(title) is not str:
             self.__title = None
         else:
@@ -118,11 +151,27 @@ class Movie:
         else:
             self.__release_year = release_year
 
-        self.__description = ""
+        self.__description = description
         self.__director = Director("")
         self.__actors = list()
         self.__genres = list()
         self.__runtime_minutes = 0
+        self.__comments: List[Comment] = list()
+
+    @property
+    def comments(self) -> Iterable[Comment]:
+        return iter(self.__comments)
+
+    @property
+    def number_of_comments(self) -> int:
+        return len(self.__comments)
+
+    def add_comment(self, comment: Comment):
+        self.__comments.append(comment)
+
+    @property
+    def rank(self) -> int:
+        return self.__rank
 
     # (str) this is a string with the movie title. \
     # leading and trailing whitespace has to be removed
@@ -332,7 +381,7 @@ class User:
         if type(user_name) is not str or user_name == "":
             self.__user_name = None
         else:
-            self.__user_name = user_name.strip().lower()
+            self.__user_name = user_name
 
         if type(password) is not str or password == "":
             self.__password = None
@@ -345,6 +394,14 @@ class User:
         self.__time_spent_watching_movies_minutes = 0
         self.__watched_movies = list()
         self.__reviews = list()
+        self.__comments: List[Comment] = list()
+
+    @property
+    def comments(self) -> Iterable[Comment]:
+        return iter(self.__comments)
+
+    def add_comment(self, comment: Comment):
+        self.__comments.append(comment)
 
     # (str)
     @property
@@ -374,7 +431,7 @@ class User:
     # defines the unique string representation of the object. \
     # For a user, it will be sufficient to use the 'user_name' for this purpose.
     def __repr__(self):
-        return f"<User {self.__user_name}>"
+        return f'<User {self.__user_name} {self.__password}>'
 
     # check for equality of two User object instances by comparing the user_name
     def __eq__(self, other):
@@ -415,4 +472,15 @@ class User:
             if review not in self.__reviews:
                 self.__reviews.append(review)
 
+
+class ModelException(Exception):
+    pass
+
+
+def make_comment(comment_text: str, user: User, movie: Movie, timestamp: datetime = datetime.today()):
+    comment = Comment(user, movie, comment_text, timestamp)
+    user.add_comment(comment)
+    movie.add_comment(comment)
+
+    return comment
 
