@@ -9,12 +9,16 @@ A Movie web!
 **Installation via requirements.txt**
 
 First clone this project from the GitHub repository using a Git Bash 
-shell as follows 
+shell as follows(or download zip from Github):
+
 ```shell
 $ git init
 $ git clone https://github.com/Ryen-LTC/CS235-A2.git
 ```
-Then,
+
+Then using a Command Prompt window, switch to the directory of *CS235-A2* 
+that now contains the movies\ and tests\ directories plus other files:
+
 ```shell
 $ cd CS235-A2
 $ py -3 -m venv venv
@@ -37,7 +41,7 @@ From the *CS235-A2* directory, and within the activated virtual environment
 ````shell
 $ flask run
 ```` 
-
+Then open the link in a browser to run the application.
 ## Configuration
 
 The *CS235-A2/.env* file contains variable settings. They are set with appropriate values.
@@ -62,9 +66,20 @@ assigns TEST_DATA_PATH with the following value (the use of os.path.join and os.
 
 `C:\Users\CI GE\Desktop\CS235-A2\tests\data`
 
-You can then run tests from within PyCharm or by typing 
+You can then run tests from within PyCharm or within the virtual environment in a terminal.
 
  ````shell
 $ python -m pytest
 ```` 
-from within the virtual environment in a terminal.
+
+
+##Note
+If when using your installation you experience any Module Not Found errors, 
+you may need to set PYTHONPATH before running or testing. This is similar to 
+CLASSPATH in Java; by setting PYTHONPATH explicitly you're telling the Python 
+interpreter where to find your modules. If required, PYTHONPATH should be 
+set to the full path of the directory that contains \movies and \tests 
+(i.e. CS235-A2):
+
+`C:\Users\CI GE\Desktop\CS235-A2> set PYTHONPATH=
+C:\Users\CI GE\Desktop\CS235-A2`
