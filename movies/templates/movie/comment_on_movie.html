@@ -58,3 +58,50 @@
         font-size: 1.0em;
     }
 </style>
+
+<main id="main">
+    <div class="movie">
+        <div class="title">
+            {{ movie.title }}
+        </div>
+        <div class="director">
+            Directed by <span class="name">{{ movie.director.director_full_name }}</span>
+        </div>
+        <div class="stars">
+            Starred by <span class="name">{{ movie.actors|map(attribute="actor_full_name")|join(", ") }}</span>
+        </div>
+        <hr>
+        <div class="genres">
+            {{ movie.genres|map(attribute="genre_name")|join(", ") }}
+        </div>
+        <div class="description">
+            {{ movie.description }}
+        </div>
+    </div>
+
+    <div class="form-wrapper">
+        <form action="{{handler_url}}" method="post">
+            {{form.movie_rank}} <!-- Need to include this hidden field as it tracks the article being commented. -->
+            {{form.cursor}}
+            {{form.csrf_token}} <!-- Need to include this token - Flask WTForms requires it. -->
+            <br>
+            <div class ="form-field">{{form.comment.label}} </br>{{form.comment(size = 100, placeholder="please type your comment here", class="textarea", cols="50", rows="6", wrap="hard")}}
+                {% if form.comment.errors %}
+                <ul class="errors">
+                    {% for error in form.comment.errors %}
+                    <li>{{error}}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {{ form.submit }}
+        </form>
+    </div>
+
+    <div style="clear:both">
+        {% for comment in movie.comments %}
+        <p class="comments">{{comment.comment}}, by {{comment.user.user_name}}, {{comment.timestamp}}</p>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}
