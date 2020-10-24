@@ -72,8 +72,7 @@ You can then run tests from within PyCharm or within the virtual environment in 
 $ python -m pytest
 ```` 
 
-
-##Note
+## Note
 
 If when using your installation you experience any Module Not Found errors, 
 you may need to set PYTHONPATH before running or testing. This is similar to 
