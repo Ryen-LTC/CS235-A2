@@ -74,6 +74,7 @@ $ python -m pytest
 
 
 ##Note
+
 If when using your installation you experience any Module Not Found errors, 
 you may need to set PYTHONPATH before running or testing. This is similar to 
 CLASSPATH in Java; by setting PYTHONPATH explicitly you're telling the Python 
