@@ -1,10 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+{% block content %}
 
-</body>
-</html>
+<style>
+    .movie {
+        border-radius: 0.45em;
+        border: 0.1em solid #00000022;
+        padding: 0.5em 1em 0.5em 1em;
+        margin: 0.5em 0;
+    }
+
+    .movie .title {
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: bold;
+        margin: 0.5em 0 0.5em 0;
+    }
+
+    .movie .director {
+        text-align: center;
+        font-size: 1.0em;
+        margin: 0.5em 0 0.5em 0;
+    }
+
+    .movie .director .name {
+        font-weight: bold;
+    }
+
+    .movie .stars {
+        text-align: center;
+        font-size: 1.0em;
+        margin: 0.5em 0 0.5em 0;
+    }
+
+    .movie .stars .name {
+        font-weight: bold;
+    }
+
+    .movie .genres {
+        text-align: center;
+        font-size: 1.0em;
+        margin: 0.5em 0 0.5em 0;
+    }
+
+    .movie .description {
+        text-align: center;
+        font-style: italic;
+        padding: 0 2em 0 2em;
+        margin: 0.5em 0 0.5em 0;
+    }
+
+    .comments {
+        border-radius: 0.45em;
+        border: 0.1em solid #00000022;
+        padding: 0.5em 1em 0.5em 1em;
+        margin: 0.5em 0;
+        text-align: center;
+        font-size: 1.0em;
+    }
+</style>
