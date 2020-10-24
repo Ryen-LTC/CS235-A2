@@ -2,8 +2,7 @@ import abc
 from typing import List
 from datetime import date
 
-from movies.domain.model import Movie, Actor, Director, Genre, Review, User
-
+from movies.domain.model import Movie, Actor, Director, Genre, Review, User, Comment
 
 repo_instance = None
 
@@ -42,10 +41,6 @@ class AbstractRepository(abc.ABC):
     def get_actor_size(self) -> int:
         raise NotImplementedError
 
-    @abc.abstractmethod
-    def get_all_actors_in_a_movie(self, movie: Movie) -> list:
-        raise NotImplementedError
-
     # Director
     @abc.abstractmethod
     def add_director(self, director: Director):
@@ -78,6 +73,10 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    def get_movie_by_rank(self, rank: int) -> Movie:
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_movie_by_name(self, movie_name: str) -> list:
         raise NotImplementedError
 
@@ -86,7 +85,7 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_movie_by_name_and_year(self, movie_name: str, release_year: int) -> Movie:
+    def get_movie_by_name_and_year(self, movie_name: str, release_year: int) -> list:
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -110,5 +109,18 @@ class AbstractRepository(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_all_actors(self) -> list:
+    def add_comment(self, comment: Comment):
+        """ Adds a Comment to the repository.
+
+        If the Comment doesn't have bidirectional links with an Article and a User, this method raises a
+        RepositoryException and doesn't update the repository.
+        """
+        if comment.user is None or comment not in comment.user.comments:
+            raise RepositoryException('Comment not correctly attached to a User')
+        if comment.movie is None or comment not in comment.movie.comments:
+            raise RepositoryException('Comment not correctly attached to an Article')
+
+    @abc.abstractmethod
+    def get_comments(self):
+        """ Returns the Comments stored in the repository. """
         raise NotImplementedError
