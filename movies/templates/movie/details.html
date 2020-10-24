@@ -58,3 +58,23 @@
         font-size: 1.0em;
     }
 </style>
+
+<main id="main">
+    <div class="movie">
+        <div class="title">
+            {{ movie.title }}
+        </div>
+        <div class="director">
+            Directed by <span class="name">{{ movie.director.director_full_name }}</span>
+        </div>
+        <div class="stars">
+            Starred by <span class="name">{{ movie.actors|map(attribute="actor_full_name")|join(", ") }}</span>
+        </div>
+        <hr>
+        <div class="genres">
+            {{ movie.genres|map(attribute="genre_name")|join(", ") }}
+        </div>
+        <div class="description">
+            {{ movie.description }}
+        </div>
+    </div>
