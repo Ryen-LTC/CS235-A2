@@ -1,8 +1,6 @@
 import abc
-from typing import List
-from datetime import date
 
-from movies.domain.model import Movie, Actor, Director, Genre, Review, User, Comment
+from movies.domain.model import Movie, Actor, Director, Genre, User, Comment
 
 repo_instance = None
 
