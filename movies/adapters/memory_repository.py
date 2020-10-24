@@ -1,8 +1,13 @@
 import csv
 import os
 
+from datetime import date, datetime
+from typing import List
+
+from bisect import bisect, bisect_left, insort_left
+
 from movies.adapters.repository import AbstractRepository
-from movies.domain.model import Movie, Actor, Director, Genre, User
+from movies.domain.model import Movie, Actor, Director, Genre, User, Comment, make_comment
 
 from werkzeug.security import generate_password_hash
 
@@ -16,6 +21,7 @@ class MemoryRepository(AbstractRepository):
         self.__genres = list()
         self.__directors = list()
         self.__reviews = list()
+        self.__comments = list()
 
     # User
     def add_user(self, user: User):
@@ -26,7 +32,7 @@ class MemoryRepository(AbstractRepository):
 
     def get_user(self, user_name: str) -> User:
         for user in self.__users:
-            if user.user_name == user_name.strip().lower():
+            if user.user_name == user_name:
                 return user
 
     def get_user_size(self):
@@ -46,18 +52,6 @@ class MemoryRepository(AbstractRepository):
 
     def get_actor_size(self) -> int:
         return len(self.__actors)
-
-    def get_all_actors_in_a_movie(self, movie: Movie) -> list:
-        res = []
-        if type(movie) == Movie:
-            for actor in movie.actors:
-                if actor not in res:
-                    res.append(actor)
-        res.sort()
-        return res
-
-    def get_all_actors(self) -> list:
-        return self.__actors
 
     # Director
     def add_director(self, director: Director):
@@ -96,10 +90,15 @@ class MemoryRepository(AbstractRepository):
                 self.__movies.append(movie)
         self.__movies.sort()
 
+    def get_movie_by_rank(self, rank: int) -> Movie:
+        for movie in self.__movies:
+            if movie.rank == rank:
+                return movie
+
     def get_movie_by_name(self, movie_name: str) -> list:
         res = []
         for movie in self.__movies:
-            if movie.title == movie_name:
+            if movie.title == movie_name.strip():
                 res.append(movie)
         res.sort()
         return res
@@ -112,16 +111,19 @@ class MemoryRepository(AbstractRepository):
         res.sort()
         return res
 
-    def get_movie_by_name_and_year(self, movie_name: str, release_year: int) -> Movie:
+    def get_movie_by_name_and_year(self, movie_name: str, release_year: int) -> list:
+        res = []
         for movie in self.__movies:
-            if (movie.title == movie_name) and (movie.release_year == release_year):
-                return movie
+            if (movie.title == movie_name.strip()) and (movie.release_year == release_year):
+                res.append(movie)
+        res.sort()
+        return res
 
     def get_movie_by_actor(self, actor_name: str) -> list:
         res = []
         for movie in self.__movies:
             for actor in movie.actors:
-                if actor.actor_full_name == actor_name:
+                if actor.actor_full_name.lower() == actor_name.strip().lower():
                     res.append(movie)
         res.sort()
         return res
@@ -130,7 +132,7 @@ class MemoryRepository(AbstractRepository):
         res = []
         for movie in self.__movies:
             for genre in movie.genres:
-                if genre.genre_name == genre_name.strip():
+                if genre.genre_name.lower() == genre_name.strip().lower():
                     res.append(movie)
         res.sort()
         return res
@@ -138,7 +140,7 @@ class MemoryRepository(AbstractRepository):
     def get_movie_by_director(self, director_name: str) -> list:
         res = []
         for movie in self.__movies:
-            if movie.director.director_full_name == director_name.strip():
+            if movie.director.director_full_name.lower() == director_name.strip().lower():
                 res.append(movie)
         res.sort()
         return res
@@ -148,6 +150,13 @@ class MemoryRepository(AbstractRepository):
 
     def get_all_movies(self) -> list:
         return self.__movies
+
+    def add_comment(self, comment: Comment):
+        super().add_comment(comment)
+        self.__comments.append(comment)
+
+    def get_comments(self):
+        return self.__comments
 
 
 def read_csv_file(filename: str):
@@ -178,7 +187,12 @@ def load_movies(data_path: str, repo: MemoryRepository):
     movies = dict()
 
     for data_row in read_csv_file(os.path.join(data_path, 'Data1000Movies.csv')):
-        movie = Movie(title=data_row[1].strip(), release_year=int(data_row[6]))
+        movie = Movie(
+            rank=int(data_row[0]),
+            title=data_row[1].strip(),
+            release_year=int(data_row[6]),
+            description=data_row[3].strip()
+        )
 
         actors = data_row[5]
         actors = actors.split(',')
@@ -203,6 +217,18 @@ def load_movies(data_path: str, repo: MemoryRepository):
     return movies
 
 
+def load_comments(data_path: str, repo: MemoryRepository, users):
+    for data_row in read_csv_file(os.path.join(data_path, 'comments.csv')):
+        comment = make_comment(
+            comment_text=data_row[3],
+            user=users[data_row[1]],
+            movie=repo.get_movie_by_rank(int(data_row[2])),
+            timestamp=datetime.fromisoformat(data_row[4])
+        )
+        repo.add_comment(comment)
+
+
 def populate(data_path: str, repo: MemoryRepository):
     load_movies(data_path, repo)
-    load_users(data_path, repo)
+    users = load_users(data_path, repo)
+    load_comments(data_path, repo, users)
