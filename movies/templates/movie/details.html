@@ -78,3 +78,41 @@
             {{ movie.description }}
         </div>
     </div>
+
+        <footer>
+        <nav style="clear:both">
+            <div style="float:right">
+                <button class="btn-general" onclick="location.href='{{prev_page_url}}'">Back to movie list</button>
+            </div>
+
+            {% if movie.number_of_comments == 0 %}
+            <div style="float:left">
+                <button class="btn-general-disabled" disabled>No comments yet</button>
+            </div>
+            {% else %}
+            <div style="float:left">
+                <button class="btn-general" onclick="myFunction()" id="myDIV1">Hide current {{ movie.number_of_comments }} comments</button>
+            </div>
+            <div id="myDIV2" style="display:block">
+                <div style="clear:both">
+                    {% for comment in movie.comments %}
+                    <p class="comments">{{comment.comment}}, by {{comment.user.user_name}}, {{comment.timestamp}}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <script>
+            function myFunction()
+            {
+                var Button = document.getElementById('myDIV1');
+                var x = document.getElementById("myDIV2");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                        Button.innerHTML = "Hide current {{ movie.number_of_comments }} comments";
+                    } else {
+                        x.style.display = "none";
+                        Button.innerHTML = "Show current {{ movie.number_of_comments }} comments";
+                    }
+            }
+            </script>
+            {% endif %}
+        </nav>
