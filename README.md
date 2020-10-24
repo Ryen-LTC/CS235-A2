@@ -8,6 +8,13 @@ A Movie web!
 
 **Installation via requirements.txt**
 
+First clone this project from the GitHub repository using a Git Bash 
+shell as follows 
+```shell
+$ git init
+$ git clone https://github.com/Ryen-LTC/CS235-A2.git
+```
+Then,
 ```shell
 $ cd CS235-A2
 $ py -3 -m venv venv
@@ -48,12 +55,16 @@ You should set this to the absolute path of the *CS235-A2/tests/data* directory.
 
 E.g. 
 
-`TEST_DATA_PATH = os.path.join('C:', os.sep, 'Users', 'ian', 'Documents', 'Python dev', 'COVID-19', 'tests', 'data')`
+`TEST_DATA_PATH = os.path.join('C:', os.sep, 'Users', 'CI GE', 'Desktop',
+                              'CS235-A2', 'tests', 'data')`
 
 assigns TEST_DATA_PATH with the following value (the use of os.path.join and os.sep ensures use of the correct platform path separator):
 
-`C:\Users\ian\Documents\python-dev\COVID-19\tests\data`
+`C:\Users\CI GE\Desktop\CS235-A2\tests\data`
 
-You can then run tests from within PyCharm.
+You can then run tests from within PyCharm or by typing 
 
- 
+ ````shell
+$ python -m pytest
+```` 
+from within the virtual environment in a terminal.
