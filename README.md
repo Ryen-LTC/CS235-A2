@@ -82,3 +82,5 @@ set to the full path of the directory that contains \movies and \tests
 (i.e. CS235-A2):
 
 `C:\CS235-A2> set PYTHONPATH=C:\CS235-A2`
+
+please note that
